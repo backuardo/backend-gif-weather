@@ -3,6 +3,8 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import path from 'path';
 import morgan from 'morgan';
+import apiRouter from './router';
+import getGif from './services/giphy';
 
 // initialize
 const app = express();
@@ -18,6 +20,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // additional init stuff goes here
+
+// register `/api` routes
+app.use('/api', apiRouter);
 
 // default index route
 app.get('/', (req, res) => {
