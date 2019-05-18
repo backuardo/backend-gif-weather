@@ -1,20 +1,23 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
 
-dotenv.config({ slient: true });
+dotenv.config({ silent: true });
 
-const ROOT_URL = 'https://api.giphy.com/v1/gifs/search';
-const LIMIT = '1';
+const ROOT_URL = 'https://api.giphy.com/v1/gifs/random';
 
-// eslint-disable-next-line import/prefer-default-export
-export const getGif = (req, res) => {
-  const { query } = req.params;
+const getGif = (query) => {
   const { GIPHY_KEY } = process.env;
-  axios.get(`${ROOT_URL}?api_key=${GIPHY_KEY}&q=${query}&limit=${LIMIT}`)
-    .then((response) => {
-      res.send(response.data);
-    })
-    .catch((error) => {
-      res.status(500).json({ error });
-    });
+
+  return new Promise((resolve, reject) => {
+    axios.get(`${ROOT_URL}?api_key=${GIPHY_KEY}&tag=${query}`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log(`gif error: ${error}`);
+        reject(error);
+      });
+  });
 };
+
+export default getGif;

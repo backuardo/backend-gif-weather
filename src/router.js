@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getWeather } from './services/weather';
-import { getGif } from './services/giphy';
+import getGif from './services/giphy';
 
 const router = Router();
 
@@ -8,10 +8,11 @@ router.get('/', (req, res) => {
   res.json({ message: 'welcome to the gif-weather api' });
 });
 
-router.route('/w/:lat/:long')
-  .get(getWeather);
-
-router.route('/g/:query')
-  .get(getGif);
+router.get('/:lat/:long', async (req, res) => {
+  const { lat, long } = req.params;
+  const weather = await getWeather(lat, long);
+  const gif = await getGif(weather.currently.summary);
+  res.send({ weather, gif });
+});
 
 export default router;
