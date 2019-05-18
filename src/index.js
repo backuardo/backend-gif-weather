@@ -1,10 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import path from 'path';
 import morgan from 'morgan';
 import apiRouter from './router';
-import getGif from './services/giphy';
 
 // initialize
 const app = express();
