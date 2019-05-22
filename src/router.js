@@ -23,7 +23,7 @@ router.get('/:query', async (req, res) => {
     }
   } catch (err) {
     res.status(500)
-      .json({ error: `Couldn't find location ${req.params.query}` });
+      .json({ error: 'Couldn\'t find that location' });
   }
 });
 
