@@ -14,11 +14,16 @@ router.get('/:query', async (req, res) => {
 
   try {
     const geo = await getGeocode(query);
-    const weather = await getWeather(geo.lat, geo.lng);
-    const gif = await getGif(weather.currently.summary);
-    res.send({ location: geo.location, weather, gif });
-  } catch (error) {
-    res.status(500).json({ error });
+    try {
+      const weather = await getWeather(geo.lat, geo.lng);
+      const gif = await getGif(weather.currently.summary);
+      res.send({ location: geo.location, weather, gif });
+    } catch (err) {
+      res.status(500).json({ error: 'Something went wrong' });
+    }
+  } catch (err) {
+    res.status(500)
+      .json({ error: `Couldn't find location ${req.params.query}` });
   }
 });
 
