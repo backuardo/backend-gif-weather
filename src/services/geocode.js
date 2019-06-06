@@ -16,7 +16,6 @@ const getGeocode = (query) => {
           lat: response.data.results[0].geometry.location.lat,
           lng: response.data.results[0].geometry.location.lng,
         };
-        console.log(result);
         resolve(result);
       })
       .catch((error) => {

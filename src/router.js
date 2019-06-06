@@ -16,7 +16,7 @@ router.get('/:query', async (req, res) => {
     const geo = await getGeocode(query);
     try {
       const weather = await getWeather(geo.lat, geo.lng);
-      const gif = await getGif(weather.currently.summary);
+      const gif = await getGif(weather.summary);
       res.send({ location: geo.location, weather, gif });
     } catch (err) {
       res.status(500).json({ error: 'Something went wrong' });
